@@ -45,3 +45,5 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 RUN apt-get clean \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
