@@ -47,3 +47,10 @@ RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY ./configuration/000-default.conf "$APACHE_CONFDIR/sites-available/000-default.conf"
+
+RUN a2enmod rewrite \
+    && a2enmod headers \
+    && a2ensite 000-default.conf \
+    && service apache2 restart
