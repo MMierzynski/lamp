@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+    http:
+        build: 
+            context: ./docker/http
+        container_name: ${CONTAINER_HTTP_NAME}
+        ports: 
+            - ${PORT_APACHE}:80
+            - ${PORT_APACHE_SSL}:443
+        restart: unless-stopped
+        volumes: 
+            - ./app/:/var/www/html
+        depends_on: 
+            - database
+        environment: 
+            - MYSQL_DATABASE=${DB_NAME}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+    
+    database:
+        image: mysql:8.0
+        container_name: ${CONTAINER_DB_NAME}
+        restart: unless-stopped
+        environment: 
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${DB_NAME}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+    
+    adminer:
+        image: adminer:4.7
+        container_name: ${CONTAINER_ADMINER_NAME}
+        restart: unless-stopped
+        ports: 
+            - ${PORT_ADMINER}:8080
+        depends_on: 
+            - database
+        
