@@ -22,7 +22,7 @@ services:
         image: mysql:8.0
         container_name: ${CONTAINER_DB_NAME}
         restart: unless-stopped
-         volumes:
+        volumes:
             - ./docker/database:/var/lib/mysql
         environment: 
             - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
