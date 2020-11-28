@@ -38,4 +38,12 @@ services:
             - ${PORT_ADMINER}:8080
         depends_on: 
             - database
+    
+    mailhog:
+        image: mailhog/mailhog
+        container_name: ${CONTAINER_MAILHOG_NAME}
+        restart: unless-stopped
+        ports:
+            - ${PORT_MAILHOG_HTTP}:8025
+            - ${PORT_MAILHOG_SMTP}:1025
         
